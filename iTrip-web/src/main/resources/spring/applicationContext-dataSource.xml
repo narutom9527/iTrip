@@ -2,14 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
     <!--上面的xsd最好和当前使用的Spring版本号一致,如果换了Spring版本,这个最好也跟着改-->
-
+  
     <!--使用dbcp连接方式,需要导入commons-dbcp的架包(版本:1.2.2)-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="driverClassName" value="${db_driverClassName}" />
         <property name="url" value="${db_url}" />
         <property name="username" value="${db_username}" />
         <property name="password" value="${db_password}" />
@@ -24,7 +24,6 @@ http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
        <!--  获取连接最大等待时间  -->
         <property name="maxWait" value="60000"></property>
     </bean>
-    
 
     <!-- 使用阿里的druid配置数据源 start-->
     <!--具体查看官网信息：https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_DruidDataSource%E5%8F%82%E8%80%83%E9%85%8D%E7%BD%AE-->

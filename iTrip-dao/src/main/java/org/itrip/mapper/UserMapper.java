@@ -8,4 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UserMapper {
 	List<User> getAll();
+
+	User login(User user);
 }
