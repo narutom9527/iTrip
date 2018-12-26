@@ -9,9 +9,10 @@
                         http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/mvc
                         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-  
+   
 	<!--上面的xsd最好和当前使用的Spring版本号一致,如果换了Spring版本,这个最好也跟着改 -->
-
+ 	<!-- 把properties文件引入到mvc中 -->
+	<context:property-placeholder location="classpath*:properties/filePath.properties" />
 
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
 	<context:component-scan

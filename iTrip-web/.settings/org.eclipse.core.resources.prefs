@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/main/resources=UTF-8
+encoding//src/main/resources/properties/filePath.properties=UTF-8
+encoding//src/main/webapp/upload.jsp=UTF-8
 encoding/<project>=UTF-8

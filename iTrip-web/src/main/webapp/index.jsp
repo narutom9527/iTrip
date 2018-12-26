@@ -21,5 +21,6 @@
 	</select>
 	<!-- 图表容器 DOM -->
 	<div id="container" style="width: 600px; height: 400px;"></div>
+	
 </body>
 </html>

@@ -1,11 +1,13 @@
 package org.itrip.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.itrip.pojo.User;
@@ -13,10 +15,14 @@ import org.itrip.service.UserService;
 import org.itrip.utils.AliTrade;
 import org.itrip.utils.Pay;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -26,6 +32,40 @@ public class IndexController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	/**
+	 * 文件上传路径
+	 */
+	@Value("${uploadPath}")
+	String uploadPath;
+	
+	
+	
+	@RequestMapping("fileUpload")
+	public String getLocation(MultipartFile file, HttpServletRequest request,Model model) {
+		if(!file.isEmpty()) {
+	        //文件名
+	        String fileName = file.getOriginalFilename();
+	        model.addAttribute("fileName",fileName);
+	        //上传路径
+	        File filePath = new File(uploadPath,fileName);
+	        //如果父路径不存在则创建
+	        if(filePath.getParentFile().exists()) {
+	        	filePath.getParentFile().mkdirs();
+	        }
+	        try {
+	        	//上传
+				file.transferTo(filePath);
+			} catch (IOException | IllegalStateException   e) {
+				e.printStackTrace();
+			} 
+		}
+		
+       return "img";
+	}
 	
 	@RequestMapping("login")
 	@ResponseBody
@@ -152,5 +192,9 @@ public class IndexController {
 		}else {//验证失败
 			return "fail";
 		}
+	}
+
+	public void setUploadPath(String uploadPath) {
+		this.uploadPath = uploadPath;
 	}
 }
